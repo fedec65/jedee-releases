@@ -6,6 +6,25 @@ This repository hosts the **signed installer assets and the `latest.json` manife
 
 ---
 
+## What is Jedee.co?
+
+A local-first desktop app that lets a developer **compose and run teams of LLM agents** — define each agent's role, goal, provider and tools, wire tasks with dependencies, and watch the run unfold live in a transparent run console.
+
+Each agent can call the same tools you would: read and write local files, fetch URLs, run shell commands (guarded and opt-in). Providers are pluggable: OpenAI-compatible, Anthropic, or a local Ollama instance. The full setup — every team definition, run transcript, message thread, and file read — is stored in a local SQLite database; provider API keys live in the OS keychain, never on disk.
+
+There are no accounts, no cloud sync, and no telemetry. Jedee.co is a single-user desktop app you install once and use on your own machine.
+
+### Advantages
+
+- **Privacy by default** — no telemetry, no third-party analytics, no cloud account. Provider keys never leave the OS keychain and conversation data never leaves the SQLite file on your disk.
+- **Multi-provider, model-agnostic** — switch between OpenAI-compatible, Anthropic and local Ollama from the same UI; bring your own keys.
+- **Multi-agent orchestration** — sequential and parallel processes with task dependencies, so you can describe a team once and rerun it.
+- **Live, transparent run console** — every tool call, message, and dependency resolution is visible while the run is in progress; full transcripts are saved locally for replay.
+- **Local-first** — fast offline; no backend to provision, no server to maintain.
+- **Built-in tools, with guardrails** — `read_file`, `write_file`, `shell_exec`, `http_request`, `web_fetch` available to agents, opt-in per agent and sandboxed by default.
+
+---
+
 ## Latest release
 
 **→ [Jedee.co v0.18.1](https://github.com/fedec65/jedee-releases/releases/latest)** _(current)_
