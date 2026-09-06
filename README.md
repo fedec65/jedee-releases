@@ -1,139 +1,106 @@
 # jedee-releases
 
-**Public update feed for [Jedee.co](https://github.com/fedec65/jedee.co)** — the local-first desktop app for orchestrating teams of LLM agents.
+Official downloads for **Jedee.co** — a desktop app that lets you run teams of AI assistants on your own computer.
 
-This repository hosts the **signed installer assets and the `latest.json` manifest** that the Jedee.co auto-updater reads on every launch. The source code, issue tracker, and development live in the main repository; this repo is purpose-built for distribution.
+This page is the **only place you need to grab installers and updates**. The app checks this page automatically and tells you when a new version is available.
 
 ---
 
 ## What is Jedee.co?
 
-A local-first desktop app that lets a developer **compose and run teams of LLM agents** — define each agent's role, goal, provider and tools, wire tasks with dependencies, and watch the run unfold live in a transparent run console.
+Jedee.co is a desktop app for your computer that lets you **set up a team of AI assistants, give them jobs to do, and watch them work**.
 
-Each agent can call the same tools you would: read and write local files, fetch URLs, run shell commands (guarded and opt-in). Providers are pluggable: OpenAI-compatible, Anthropic, or a local Ollama instance. The full setup — every team definition, run transcript, message thread, and file read — is stored in a local SQLite database; provider API keys live in the OS keychain, never on disk.
+Each assistant (we call them "agents") has a role — for example "researcher", "writer", "developer" — and uses an AI model you choose (ChatGPT, Claude, or a model running locally on your machine with Ollama). You describe the goal, the assistants collaborate, share files, call web tools, and report back when they're done.
 
-There are no accounts, no cloud sync, and no telemetry. Jedee.co is a single-user desktop app you install once and use on your own machine.
+Everything happens **on your computer**:
 
-### Advantages
+- No account, no signup.
+- No data sent to jedee.co or any analytics service.
+- Your conversations and files stay on your disk.
+- Your AI provider keys are stored in your operating system's secure vault (Keychain on Mac, Credential Manager on Windows).
 
-- **Privacy by default** — no telemetry, no third-party analytics, no cloud account. Provider keys never leave the OS keychain and conversation data never leaves the SQLite file on your disk.
-- **Multi-provider, model-agnostic** — switch between OpenAI-compatible, Anthropic and local Ollama from the same UI; bring your own keys.
-- **Multi-agent orchestration** — sequential and parallel processes with task dependencies, so you can describe a team once and rerun it.
-- **Live, transparent run console** — every tool call, message, and dependency resolution is visible while the run is in progress; full transcripts are saved locally for replay.
-- **Local-first** — fast offline; no backend to provision, no server to maintain.
-- **Built-in tools, with guardrails** — `read_file`, `write_file`, `shell_exec`, `http_request`, `web_fetch` available to agents, opt-in per agent and sandboxed by default.
+Jedee.co works fully offline once installed. It only goes online to call the AI provider you configured and to check this page for updates.
+
+### Why people like it
+
+- **Private by default** — no telemetry, no third-party analytics, no cloud account. Your provider keys never leave the secure vault of your OS; your conversation data never leaves the database on your disk.
+- **Bring your own AI** — use OpenAI-compatible services, Anthropic, or a local Ollama installation. Switch providers without changing your workflow.
+- **Run teams, not single chats** — describe a team of agents with dependencies between their tasks, hit run, and watch the work unfold in a live console.
+- **See everything that happens** — every tool call, message, and decision is visible while the run is in progress; full transcripts are saved locally so you can replay or audit later.
+- **Works offline** — fast, no backend to set up, no server to maintain.
+- **Sensible defaults, escape hatches when you need them** — built-in file and web tools are sandboxed and opt-in per agent; you stay in control of what each agent can touch.
 
 ---
 
 ## Latest release
 
-**→ [Jedee.co v0.18.1](https://github.com/fedec65/jedee-releases/releases/latest)** _(current)_
+**[Jedee.co v0.18.1](https://github.com/fedec65/jedee-releases/releases/latest)** _(current)_
 
-Highlights:
+What's new since the previous version:
 
-- Four-step first-run wizard: personalize (language preselected from the OS, optional display name) → welcome → connect → goal.
-- New "Help & guides" card on the goal step — closes the wizard and prefills the chat composer with the localized help keyword (`aiuto!`, `help!`, `hilfe!`, `aide!`, `ayuda!`, `ajuda!`).
-- Modals no longer exceed the app window — the dialog overlay scrolls instead of clipping content on short windows.
-- Frontend-only release; no breaking changes to local data, providers, or stored agents.
+- A friendlier first-run welcome — when you start the app for the first time you now pick your language (we'll guess it from your system) and optionally your name, then get a short tour.
+- A new "Help & guides" tile on the welcome screen — finishing the tour drops the help keyword for your language right into the chat composer, so you can ask the app for help in your own words.
+- Small polish: pop-ups no longer grow past the window edge on small displays.
 
-The full changelog lives on each [GitHub Release](https://github.com/fedec65/jedee-releases/releases) page.
+Full notes for every version live on each [Release page](https://github.com/fedec65/jedee-releases/releases).
 
 ---
 
 ## Install
 
-### macOS (Apple Silicon and Intel)
+### macOS (Mac with Apple Silicon or Intel)
 
-1. Download **`Jedee.co_0.18.1_universal.dmg`** from the [latest release](https://github.com/fedec65/jedee-releases/releases/latest).
-2. Open the `.dmg` and drag **Jedee.co** to the Applications folder.
-3. The app is signed with a Developer ID; if Gatekeeper warns on first launch, right-click the app → **Open** to confirm.
+1. Download **`Jedee.co_0.18.1_universal.dmg`** from the [latest release page](https://github.com/fedec65/jedee-releases/releases/latest).
+2. Open the `.dmg` and drag **Jedee.co** to your **Applications** folder.
+3. The first time you launch it, macOS may ask you to confirm the app is from an identified developer — right-click the app in Applications and choose **Open**, then confirm.
 
 Requires **macOS 11.0 (Big Sur)** or later.
 
-### Windows (x64)
+### Windows (PC, 64-bit)
 
-Pick **one** of the two installers:
+Pick the installer that suits you:
 
-- **`Jedee.co_0.18.1_x64_en-US.msi`** — Windows Installer. Recommended for managed/provisioned installs and silent deployment (`msiexec /i ...`).
-- **`Jedee.co_0.18.1_x64-setup.exe`** (NSIS) — smaller, per-user installer with a friendlier wizard. Recommended for most desktops.
+- **`Jedee.co_0.18.1_x64_en-US.msi`** — the standard Windows installer. Best if your IT department manages installs or you want a silent install.
+- **`Jedee.co_0.18.1_x64-setup.exe`** — a friendlier installer wizard. Best for most home users.
 
-Both update existing installs in place. Requires **Windows 10 (1809)** or later, x64.
+Both will update an existing install in place. Requires **Windows 10 (1809)** or later.
 
-### Verifying the signature
+### Is it safe to install?
 
-Every installer ships next to a `.sig` companion file produced by Tauri's updater (`minisign`-compatible). The public key used to verify them is embedded in the main app's [`tauri.conf.json`](https://github.com/fedec65/jedee.co/blob/master/src-tauri/tauri.conf.json) under `plugins.updater.pubkey`.
-
-To verify a download out of band:
-
-```bash
-# Requires minisign (https://jedisct1.github.io/minisign/)
-minisign -V \
-  -P "<paste the pubkey from tauri.conf.json>" \
-  -m Jedee.co_0.18.1_universal.dmg \
-  -x Jedee.co_0.18.1_universal.dmg.sig
-```
-
-The Tauri updater runs this check automatically on every launch before applying an update.
+Yes. Jedee.co installers are **built by an automated pipeline on a clean machine every release, signed with a developer certificate, and published as GitHub Releases**. Every installer has a cryptographic signature attached; the Jedee.co app verifies the signature against a key that's hard-coded inside the installed app before it ever applies an update. Old installers stay available so you can roll back if you need to.
 
 ---
 
 ## Auto-update
 
-Jedee.co checks for new versions on launch. The flow is:
+Once installed, Jedee.co takes care of updates itself:
 
-1. App reads `latest.json` from `releases/latest/download/latest.json` on this repo.
-2. If the manifest's `version` is newer than the running build, the app downloads the platform-specific asset and verifies its Ed25519 signature against the pinned public key.
-3. If verification passes, the user is prompted to install; on confirmation the app relaunches into the new version.
-
-Updates are **opt-in at install time** — you can dismiss and keep the current build. There is no background download and no silent install.
+1. On launch, the app quietly checks this page for a newer version.
+2. If there is one, it downloads the new installer and verifies the signature.
+3. It then asks you if you want to install the update. Nothing is downloaded in the background and nothing installs without your say-so.
 
 ---
 
-## Privacy
+## Privacy in plain English
 
-Jedee.co is local-first. The app makes **no telemetry calls** to jedee.co or any third party. The only outbound network traffic is:
-
-- LLM provider API calls you configure (OpenAI-compatible, Anthropic, local Ollama).
-- The release-check request to `github.com` for `latest.json` and asset URLs.
-
-Provider API keys are stored in the OS keychain, never on disk in plaintext.
+- We don't collect anything. There is no analytics SDK in the app, no crash reporter, no "phone home" call. The only outbound traffic the app generates is the AI requests you send to the provider you configured and the occasional check to this page for updates.
+- Your AI provider keys are stored in your operating system's secure vault (macOS Keychain / Windows Credential Manager) and only read in memory when the app talks to the provider.
+- All your teams, runs, conversations and files live in a single database inside the app's private data folder on your disk (`~/Library/Application Support/co.jedee.app` on macOS, `%APPDATA%\co.jedee.app` on Windows). Nothing in there is sent anywhere.
 
 ---
 
-## Why a separate repository?
+## A note for the curious
 
-Splitting release artifacts out of the main codebase keeps the source tree small, makes the updater endpoint stable across restructures, and lets us pin a single, versioned public key for update-signature verification.
+Jedee.co's source lives at [github.com/fedec65/jedee.co](https://github.com/fedec65/jedee.co). This separate downloads repository exists so that:
 
-### Advantages
+- the main source tree stays small and fast to clone;
+- the auto-update check points to a single, stable URL that never moves;
+- the public key used to verify installers is bound to the installed app and cannot be silently swapped out.
 
-- **Small, fast main repository** — no `target/` artifacts, no bundled runtime binaries, no signed installers in commit history.
-- **Stable update endpoint** — the updater always reads `https://github.com/fedec65/jedee-releases/releases/latest/download/latest.json`. Renames or moves on the main repo never break existing installs.
-- **Public-key pinning** — the updater's public key is embedded in the main app's `tauri.conf.json`; rotating it requires shipping a new app version, so the trust anchor cannot drift silently.
-- **GitHub Releases as a CDN** — assets are served from GitHub's global edge cache with high availability and HTTPS by default.
-- **Reproducible builds** — every release is produced by a single CI workflow on a clean runner, then promoted from draft to public.
-- **Immutable history** — published releases are marked immutable; old assets remain available for users who need to roll back.
-
----
-
-## For developers
-
-- Source: [github.com/fedec65/jedee.co](https://github.com/fedec65/jedee.co)
-- Release workflow: [`.github/workflows/release.yml`](https://github.com/fedec65/jedee.co/blob/master/.github/workflows/release.yml) — tag-push driven, builds universal macOS DMG + Windows MSI/NSIS, attaches everything to a draft release on this repo.
-- Promoting a draft to public is a manual `gh release edit --draft=false` after CI succeeds.
-
-To cut a new release:
-
-```bash
-# 1. Bump version in package.json + src-tauri/Cargo.toml + src-tauri/tauri.conf.json
-# 2. Commit, then:
-git tag -a vX.Y.Z -m "vX.Y.Z — short summary"
-git push origin master vX.Y.Z
-# 3. Wait for CI; when the draft is ready:
-gh release edit vX.Y.Z --draft=false
-```
+The release build process is described in [`.github/workflows/release.yml`](https://github.com/fedec65/jedee.co/blob/master/.github/workflows/release.yml) in the main repository.
 
 ---
 
 ## License
 
-Jedee.co source code is proprietary. The installer assets in this repository are distributed under the same terms as the app (see EULA shown on first launch).
+Jedee.co source code is proprietary. The installer files in this repository are distributed under the same terms as the app (see the EULA shown on first launch). Nothing here is sold or licensed for redistribution.
