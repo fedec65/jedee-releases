@@ -6,21 +6,6 @@ This repository hosts the **signed installer assets and the `latest.json` manife
 
 ---
 
-## Why a separate repository?
-
-Splitting release artifacts out of the main codebase keeps the source tree small, makes the updater endpoint stable across restructures, and lets us pin a single, versioned public key for update-signature verification.
-
-### Advantages
-
-- **Small, fast main repository** — no `target/` artifacts, no bundled runtime binaries, no signed installers in commit history.
-- **Stable update endpoint** — the updater always reads `https://github.com/fedec65/jedee-releases/releases/latest/download/latest.json`. Renames or moves on the main repo never break existing installs.
-- **Public-key pinning** — the updater's public key is embedded in the main app's `tauri.conf.json`; rotating it requires shipping a new app version, so the trust anchor cannot drift silently.
-- **GitHub Releases as a CDN** — assets are served from GitHub's global edge cache with high availability and HTTPS by default.
-- **Reproducible builds** — every release is produced by a single CI workflow on a clean runner, then promoted from draft to public.
-- **Immutable history** — published releases are marked immutable; old assets remain available for users who need to roll back.
-
----
-
 ## Latest release
 
 **→ [Jedee.co v0.18.1](https://github.com/fedec65/jedee-releases/releases/latest)** _(current)_
@@ -93,6 +78,21 @@ Jedee.co is local-first. The app makes **no telemetry calls** to jedee.co or any
 - The release-check request to `github.com` for `latest.json` and asset URLs.
 
 Provider API keys are stored in the OS keychain, never on disk in plaintext.
+
+---
+
+## Why a separate repository?
+
+Splitting release artifacts out of the main codebase keeps the source tree small, makes the updater endpoint stable across restructures, and lets us pin a single, versioned public key for update-signature verification.
+
+### Advantages
+
+- **Small, fast main repository** — no `target/` artifacts, no bundled runtime binaries, no signed installers in commit history.
+- **Stable update endpoint** — the updater always reads `https://github.com/fedec65/jedee-releases/releases/latest/download/latest.json`. Renames or moves on the main repo never break existing installs.
+- **Public-key pinning** — the updater's public key is embedded in the main app's `tauri.conf.json`; rotating it requires shipping a new app version, so the trust anchor cannot drift silently.
+- **GitHub Releases as a CDN** — assets are served from GitHub's global edge cache with high availability and HTTPS by default.
+- **Reproducible builds** — every release is produced by a single CI workflow on a clean runner, then promoted from draft to public.
+- **Immutable history** — published releases are marked immutable; old assets remain available for users who need to roll back.
 
 ---
 
