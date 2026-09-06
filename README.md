@@ -6,6 +6,8 @@ Official downloads for **Jedee.co** — a desktop app that lets you run teams of
 
 This page is the **only place you need to grab installers and updates**. The app checks this page automatically and tells you when a new version is available.
 
+New to the app? Start with the [**User Guide**](USER-GUIDE.md) — it walks you through first launch, providers, chat, permissions, connectors, automations and more.
+
 ---
 
 ## What is Jedee.co?
