@@ -28,53 +28,80 @@ Jedee.co works fully offline once installed. It only goes online to call the AI 
 - **Private by default** — no telemetry, no third-party analytics, no cloud account. Your provider keys never leave the secure vault of your OS; your conversation data never leaves the database on your disk.
 - **Bring your own AI** — use OpenAI-compatible services, Anthropic, or a local Ollama installation. Switch providers without changing your workflow.
 - **Run teams, not single chats** — describe a team of agents with dependencies between their tasks, hit run, and watch the work unfold in a live console.
-- **See everything that happens** — every tool call, message, and decision is visible while the run is in progress; full transcripts are saved locally so you can inspect exactly what each agent did.
-- **Automate what you repeat** — turn a finished run into a saved automation, then rerun it on a schedule or with one click.
+- **See everything that happens** — every tool call, message, and decision is visible while the run is in progress; full transcripts are saved locally so you can replay or audit later.
+- **Works offline** — fast, no backend to set up, no server to maintain.
+- **Sensible defaults, escape hatches when you need them** — built-in file and web tools are sandboxed and opt-in per agent; you stay in control of what each agent can touch.
 
-## What you get with each release
+---
 
-Every release here includes:
+## Latest release
 
-- **macOS**: a signed and notarized `Jedee.co_*.dmg` for Apple Silicon and Intel Macs. Double-click to open, drag Jedee.co into Applications, done.
-- **Windows**: a signed `Jedee.co_*.exe` (NSIS installer) and `*.msi` (WiX). Run either one and follow the prompts.
-- **Updates**: when a new version is released, the app notifies you in the bottom-right corner of the window and updates itself automatically — you don't need to come back here. If automatic update is off (or blocked), you can always grab the latest installer from this page.
+**[Jedee.co v0.18.1](https://github.com/fedec65/jedee-releases/releases/latest)** _(current)_
 
-## How to install on macOS
+What's new since the previous version:
 
-1. Download the `.dmg` for the latest version.
-2. Double-click the `.dmg` to mount it.
-3. Drag **Jedee.co** into your Applications folder.
-4. First launch: right-click Jedee.co in Applications → Open (macOS checks the signature first; once you confirm, it launches normally afterwards).
+- A friendlier first-run welcome — when you start the app for the first time you now pick your language (we'll guess it from your system) and optionally your name, then get a short tour.
+- A new "Help & guides" tile on the welcome screen — finishing the tour drops the help keyword for your language right into the chat composer, so you can ask the app for help in your own words.
+- Small polish: pop-ups no longer grow past the window edge on small displays.
 
-## How to install on Windows
+Full notes for every version live on each [Release page](https://github.com/fedec65/jedee-releases/releases).
 
-1. Download the `.exe` (recommended) or `.msi` for the latest version.
-2. Run it and follow the installer prompts. The app installs for the current user.
-3. Launch Jedee.co from the Start menu.
+---
 
-## Keeping Jedee.co updated
+## Install
 
-The app checks this page (via `latest.json`) at launch and periodically while running. When a new version is found, it downloads the update in the background, then asks you to restart to apply it.
+### macOS (Mac with Apple Silicon or Intel)
 
-Prefer not to auto-update? You can turn it off in the app under **Settings › General**. You can also reinstall manually from this page any time — same result.
+1. Download **`Jedee.co_0.18.1_universal.dmg`** from the [latest release page](https://github.com/fedec65/jedee-releases/releases/latest).
+2. Open the `.dmg` and drag **Jedee.co** to your **Applications** folder.
+3. The first time you launch it, macOS may ask you to confirm the app is from an identified developer — right-click the app in Applications and choose **Open**, then confirm.
 
-## Why a separate repository?
+Requires **macOS 11.0 (Big Sur)** or later.
 
-Releases live in this repo — not on the jedee.co codebase repo — so that:
+### Windows (PC, 64-bit)
 
-- Nobody can push a fake update into your app by opening a PR against the source repo.
-- Anyone can inspect the release feed (`latest.json`) and the installers without wading through source code.
-- The source repo stays clean: only code, docs, and issues.
+Pick the installer that suits you:
 
-## How updates are published
+- **`Jedee.co_0.18.1_x64_en-US.msi`** — the standard Windows installer. Best if your IT department manages installs or you want a silent install.
+- **`Jedee.co_0.18.1_x64-setup.exe`** — a friendlier installer wizard. Best for most home users.
 
-The release workflow in the [jedee.co source repo](https://github.com/fedec65/jedee.co) builds and signs installers on every new tag, then publishes them here as a **GitHub release** with:
+Both will update an existing install in place. Requires **Windows 10 (1809)** or later.
 
-- `latest.json` — the update manifest the app polls.
-- `*.dmg`, `*.exe`, `*.msi` — installers for both platforms.
-- `*.sig` — Ed25519 signatures (the app verifies these before applying an update).
+### Is it safe to install?
 
-The workflow uses the release feed's own `RELEASES_FEED_TOKEN` secret so it can publish here; the source repo has no other write access to this one.
+Yes. Jedee.co installers are **built by an automated pipeline on a clean machine every release, signed with a developer certificate, and published as GitHub Releases**. Every installer has a cryptographic signature attached; the Jedee.co app verifies the signature against a key that's hard-coded inside the installed app before it ever applies an update. Old installers stay available so you can roll back if you need to.
+
+---
+
+## Auto-update
+
+Once installed, Jedee.co takes care of updates itself:
+
+1. On launch, the app quietly checks this page for a newer version.
+2. If there is one, it downloads the new installer and verifies the signature.
+3. It then asks you if you want to install the update. Nothing is downloaded in the background and nothing installs without your say-so.
+
+---
+
+## Privacy in plain English
+
+- We don't collect anything. There is no analytics SDK in the app, no crash reporter, no "phone home" call. The only outbound traffic the app generates is the AI requests you send to the provider you configured and the occasional check to this page for updates.
+- Your AI provider keys are stored in your operating system's secure vault (macOS Keychain / Windows Credential Manager) and only read in memory when the app talks to the provider.
+- All your teams, runs, conversations and files live in a single database inside the app's private data folder on your disk (`~/Library/Application Support/co.jedee.app` on macOS, `%APPDATA%\co.jedee.app` on Windows). Nothing in there is sent anywhere.
+
+---
+
+## A note for the curious
+
+Jedee.co's source lives at [github.com/fedec65/jedee.co](https://github.com/fedec65/jedee.co). This separate downloads repository exists so that:
+
+- the main source tree stays small and fast to clone;
+- the auto-update check points to a single, stable URL that never moves;
+- the public key used to verify installers is bound to the installed app and cannot be silently swapped out.
+
+The release build process is described in [`.github/workflows/release.yml`](https://github.com/fedec65/jedee.co/blob/master/.github/workflows/release.yml) in the main repository.
+
+---
 
 ## License
 
